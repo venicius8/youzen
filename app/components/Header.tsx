@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="bg-gray-200 flex justify-between items-center top-0 w-screen h-18 z-100 shadow-xl sticky">
+    <header className="bg-gray-100 flex justify-between items-center top-0 w-screen h-16 z-100 shadow-2xl sticky">
       <div>
         <h1 className="text-4xl">LogoEx</h1>
       </div>
