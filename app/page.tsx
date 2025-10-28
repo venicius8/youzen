@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import Button from "./components/UI/Button";
 
 export default function name() {
   const newUser: boolean = true;
-  const [startQuiz, setStartQuiz] = useState(false);
+  const [startQuiz, setStartQuiz] = useState(true);
 
   return (
     <main className="bg-green-100 h-600 text-center">
@@ -17,7 +18,7 @@ export default function name() {
 
       {newUser ? (
         <>
-          <h2 className="text-2xl m-4 font">
+          <h2 className="text-2xl m-4">
             Parece que você é novo por aqui. Clique aqui abaixo e vamos iniciar
             sua primeira atividade.
           </h2>
@@ -29,13 +30,23 @@ export default function name() {
             Começar
           </button>
           {startQuiz && (
-            <div>
-              <div className="fixed w-2/3 max-w-200 h-150 bg-green-200 left-1/2 top-1/2 -translate-1/2 border rounded-4xl z-90"></div>
+            <>
+              <div className="fixed w-2/3 max-w-200 h-150 bg-green-200 left-1/2 top-1/2 -translate-1/2 border rounded-4xl flex flex-col justify-between px-8 py-15 z-90">
+                <h2 className="text-2xl">
+                  Antes de iniciar a sua primeira atividade, que tal fazermos um
+                  teste rápido? Assim, recomendaremos práticas mais alinhada ao
+                  seu objetivo.
+                </h2>
+                <div className="flex flex-col md:flex-row justify-around">
+                  <Button type="success">Fazer o teste</Button>
+                  <Button type="danger">Rejeitar</Button>
+                </div>
+              </div>
               <div
                 onClick={() => setStartQuiz(!setStartQuiz)}
                 className="fixed top-0 left-0 w-screen h-screen bg-black/40 backdrop-blur-xs z-86"
               ></div>
-            </div>
+            </>
           )}
         </>
       ) : (
