@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const navLink = (el: string, ref: string) => (
   <li>
@@ -12,10 +15,28 @@ const navLink = (el: string, ref: string) => (
 );
 
 export default function Header() {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    function scrollHandler() {
+      setScrolled(window.scrollY > 40);
+    }
+    scrollHandler();
+
+    window.addEventListener("scroll", scrollHandler);
+  }, []);
+
   return (
-    <header className="bg-gray-100 flex justify-between items-center top-0 w-screen h-16 z-100 shadow-2xl sticky px-10">
+    <header
+      className={`flex justify-between items-center top-0 w-screen h-16 z-100 shadow-2xl sticky px-10 duration-300 ${
+        scrolled ? "bg-green-100" : "bg-black/50 border-black border-b-2"
+      }`}
+    >
       <div>
-        <Link href={"/"} className="text-4xl">
+        <Link
+          href={"/"}
+          className={`text-4xl ${scrolled ? "text-black" : "text-white"}`}
+        >
           LogoEx
         </Link>
       </div>

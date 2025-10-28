@@ -3,8 +3,8 @@ import "./globals.css";
 import Header from "./components/Header";
 
 export const metadata: Metadata = {
-  title: "",
-  description: "",
+  title: "YouZen",
+  description: "Você, Zen.",
 };
 
 export default function RootLayout({
