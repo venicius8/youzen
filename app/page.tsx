@@ -2,19 +2,15 @@
 
 import { useState } from "react";
 import Button from "./components/UI/Button";
+import GreetingHeader from "./components/GreetingHeader";
 
 export default function name() {
   const newUser: boolean = true;
   const [startQuiz, setStartQuiz] = useState(false);
 
   return (
-    <main className="bg-blue-100 h-600 text-center">
-      <div className="relative bg-[url('/morning-nature.jpg')] h-[50vh] bg-cover bg-center flex items-center justify-center mb-10">
-        <h1 className="text-4xl text-white bg-black/30 px-4 py-2 rounded-2xl z-10">
-          Bom dia
-        </h1>
-        <span className="absolute inset-x-0 bottom-0 h-5 bg-linear-to-b from-transparent to-blue-100"></span>
-      </div>
+    <main className="bg-blue-100 h-300 text-center">
+      <GreetingHeader />
 
       {newUser ? (
         <>

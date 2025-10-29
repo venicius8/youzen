@@ -46,9 +46,9 @@ export default function Header() {
       </div>
       <nav>
         <ul className="flex gap-8">
-          {NavLink("Explorar", "/")}
-          {NavLink("Sobre", "/")}
-          {NavLink("Perfil", "/")}
+          {NavLink("Explorar", "/explore")}
+          {NavLink("Perfil", "/profile")}
+          {NavLink("Sobre", "/about")}
         </ul>
       </nav>
     </header>
