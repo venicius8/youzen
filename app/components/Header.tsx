@@ -2,32 +2,48 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import Overlay from "./UI/Overlay";
 
-function NavLink(el: string, ref: string) {
-  return (
-    <li>
-      <Link
-        href={ref}
-        className="bg-white text-xl p-2 rounded-xl hover:border-b-2 duration-100"
-      >
-        {el}
-      </Link>
-    </li>
-  );
-}
+type navItemProps = { label: string; href: string };
+
+const NavLink = ({ label, href }: navItemProps) => (
+  <li>
+    <Link
+      href={href}
+      className="bg-white text-xl p-2 rounded-xl hover:border-b-2 duration-100"
+    >
+      {label}
+    </Link>
+  </li>
+);
+
+const NavMenu = ({ label, href }: navItemProps) => (
+  <li className="bg-blue-100 w-full py-2 text-3xl border-t border-b border-white text-center">
+    <Link href={href}>{label}</Link>
+  </li>
+);
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [innerWidth, setInnerWidth] = useState(0);
+  const [menu, setMenu] = useState(false);
 
   useEffect(() => {
     function scrollHandler() {
       setScrolled(window.scrollY > 40);
     }
+    function resizeWidth() {
+      setInnerWidth(window.innerWidth);
+    }
     scrollHandler();
 
     window.addEventListener("scroll", scrollHandler);
+    window.addEventListener("resize", resizeWidth);
 
-    return () => window.removeEventListener("scroll", scrollHandler);
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+      window.removeEventListener("resize", resizeWidth);
+    };
   }, []);
 
   return (
@@ -45,11 +61,40 @@ export default function Header() {
         </Link>
       </div>
       <nav>
-        <ul className="flex gap-8">
-          {NavLink("Explorar", "/explore")}
-          {NavLink("Perfil", "/profile")}
-          {NavLink("Sobre", "/about")}
-        </ul>
+        {innerWidth > 767 ? (
+          <ul className="flex gap-8">
+            <NavLink label="Explorar" href="/explore" />
+            <NavLink label="Perfil" href="/profile" />
+            <NavLink label="Sobre" href="/about" />
+          </ul>
+        ) : (
+          <>
+            <button
+              onClick={() => setMenu(!menu)}
+              className="text-6xl text-white cursor-pointer"
+            >
+              ≡
+            </button>
+            {menu && (
+              <>
+                <aside className="w-90 h-screen bg-blue-400 fixed right-0 top-0 border-l-2 border-blue-300 z-100">
+                  <button
+                    className="text-6xl cursor-pointer ml-6"
+                    onClick={() => setMenu(!menu)}
+                  >
+                    ×
+                  </button>
+                  <ul className="flex flex-col gap-6 mt-4">
+                    <NavMenu label="Explorar" href="/explore" />
+                    <NavMenu label="Perfil" href="/profile" />
+                    <NavMenu label="Sobre" href="/about" />
+                  </ul>
+                </aside>
+                <Overlay onClick={() => setMenu(!menu)} zIndex={90} />
+              </>
+            )}
+          </>
+        )}
       </nav>
     </header>
   );

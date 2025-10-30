@@ -3,13 +3,14 @@
 import { useState } from "react";
 import Button from "./components/UI/Button";
 import GreetingHeader from "./components/GreetingHeader";
+import Overlay from "./components/UI/Overlay";
 
-export default function name() {
+export default function Main() {
   const newUser: boolean = true;
   const [startQuiz, setStartQuiz] = useState(false);
 
   return (
-    <main className="bg-blue-100 h-300 text-center">
+    <main className="bg-blue-100 h-screen text-center">
       <GreetingHeader />
 
       {newUser ? (
@@ -24,7 +25,7 @@ export default function name() {
           </div>
           {startQuiz && (
             <>
-              <div className="fixed w-2/3 max-w-200 h-150 bg-blue-200 left-1/2 top-1/2 -translate-1/2 border rounded-4xl flex flex-col justify-between px-8 py-15 z-90">
+              <div className="fixed w-2/3 max-w-md h-150 bg-blue-200 left-1/2 top-1/2 -translate-1/2 border rounded-4xl flex flex-col justify-between px-8 py-15 z-110">
                 <h2 className="text-2xl">
                   Antes de iniciar a sua primeira atividade, que tal fazermos um
                   teste rápido? Assim, recomendaremos práticas mais alinhada ao
@@ -35,10 +36,7 @@ export default function name() {
                   <Button type="danger">Rejeitar</Button>
                 </div>
               </div>
-              <div
-                onClick={() => setStartQuiz(false)}
-                className="fixed top-0 left-0 w-screen h-screen bg-black/40 backdrop-blur-xs z-86"
-              ></div>
+              <Overlay onClick={() => setStartQuiz(false)} zIndex={100} />
             </>
           )}
         </>
