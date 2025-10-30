@@ -18,7 +18,7 @@ const NavLink = ({ label, href }: navItemProps) => (
 );
 
 const NavMenu = ({ label, href }: navItemProps) => (
-  <li className="bg-blue-100 w-full py-2 text-3xl border-t border-b border-white text-center">
+  <li className="bg-blue-100 w-full py-2 text-3xl border-y border-white text-center">
     <Link href={href}>{label}</Link>
   </li>
 );
