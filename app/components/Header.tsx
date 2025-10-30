@@ -29,22 +29,26 @@ export default function Header() {
   const [menu, setMenu] = useState(false);
 
   useEffect(() => {
-    function scrollHandler() {
-      setScrolled(window.scrollY > 40);
-    }
-    function resizeWidth() {
-      setInnerWidth(window.innerWidth);
-    }
-    scrollHandler();
+    const handleScroll = () => setScrolled(window.scrollY > 40);
 
-    window.addEventListener("scroll", scrollHandler);
-    window.addEventListener("resize", resizeWidth);
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setInnerWidth(width);
+
+      if (width > 767) setMenu((prev) => (prev ? false : prev));
+    };
+
+    handleScroll();
+    handleResize();
+
+    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
 
     return () => {
-      window.removeEventListener("scroll", scrollHandler);
-      window.removeEventListener("resize", resizeWidth);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [menu]);
 
   return (
     <header
@@ -68,34 +72,33 @@ export default function Header() {
             <NavLink label="Sobre" href="/about" />
           </ul>
         ) : (
-          <>
-            <button
-              onClick={() => setMenu(!menu)}
-              className="text-6xl text-white cursor-pointer"
-            >
-              ≡
-            </button>
-            {menu && (
-              <>
-                <aside className="w-90 h-screen bg-blue-400 fixed right-0 top-0 border-l-2 border-blue-300 z-100">
-                  <button
-                    className="text-6xl cursor-pointer ml-6"
-                    onClick={() => setMenu(!menu)}
-                  >
-                    ×
-                  </button>
-                  <ul className="flex flex-col gap-6 mt-4">
-                    <NavMenu label="Explorar" href="/explore" />
-                    <NavMenu label="Perfil" href="/profile" />
-                    <NavMenu label="Sobre" href="/about" />
-                  </ul>
-                </aside>
-                <Overlay onClick={() => setMenu(!menu)} zIndex={90} />
-              </>
-            )}
-          </>
+          <button
+            onClick={() => setMenu(!menu)}
+            className="text-6xl text-white cursor-pointer"
+          >
+            ≡
+          </button>
         )}
       </nav>
+
+      {innerWidth < 768 && menu && (
+        <>
+          <aside className="w-90 h-screen bg-blue-400 fixed right-0 top-0 border-l-2 border-blue-300 z-100">
+            <button
+              className="text-6xl cursor-pointer ml-6"
+              onClick={() => setMenu(!menu)}
+            >
+              ×
+            </button>
+            <ul className="flex flex-col gap-6 mt-4">
+              <NavMenu label="Explorar" href="/explore" />
+              <NavMenu label="Perfil" href="/profile" />
+              <NavMenu label="Sobre" href="/about" />
+            </ul>
+          </aside>
+          <Overlay onClick={() => setMenu(!menu)} zIndex={90} />
+        </>
+      )}
     </header>
   );
 }
