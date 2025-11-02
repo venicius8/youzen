@@ -52,7 +52,7 @@ export default function Soundscape() {
             <p>Exemplo</p>
           </div>
         </div>
-        <div className="border w-1/3 md:w-full">
+        <div className="w-1/3 md:w-full">
           <div className="border h-1/3 text-center">
             <h2>Áudio selecionado:</h2>
             <p>...</p>
