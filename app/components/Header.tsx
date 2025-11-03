@@ -61,7 +61,7 @@ export default function Header() {
           href={"/"}
           className={`text-4xl ${scrolled ? "text-black" : "text-white"}`}
         >
-          LogoEx
+          YouZen
         </Link>
       </div>
       <nav>
