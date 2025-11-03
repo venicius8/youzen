@@ -1,20 +1,5 @@
-function AudioContainer() {
-  return (
-    <div
-      className="w-3/4 max-w-3xl h-20 bg-linear-to-br from-cyan-400 to-blue-600 rounded-full my-6"
-      style={{ boxShadow: "-2px 5px 10px rgba(0, 0, 0, 0.5)" }}
-    ></div>
-  );
-}
-
-function AudioSection({ label }: { label: String }) {
-  return (
-    <span className="flex flex-col items-center mt-20">
-      <p className="text-xl text-center">{label}</p>
-      <hr className="w-4/5" />
-    </span>
-  );
-}
+import AudioContainer from "./components/AudioContainer";
+import AudioSection from "./components/AudioSection";
 
 export default function Soundscape() {
   return (
@@ -23,21 +8,14 @@ export default function Soundscape() {
         <h1 className="mt-25 mb-11 text-4xl text-center">Soundscape</h1>
 
         <AudioSection label="Animais" />
-        <AudioContainer />
-        <AudioContainer />
-        <AudioContainer />
-        <AudioContainer />
+        <AudioContainer src={`${process.env.AUDIO_URL}/owl`} />
+        <AudioContainer src={`${process.env.AUDIO_URL}/bird`} />
+        <AudioContainer src={`${process.env.AUDIO_URL}/cricket`} />
 
         <AudioSection label="Natureza" />
-        <AudioContainer />
-        <AudioContainer />
-        <AudioContainer />
-        <AudioContainer />
-
-        <AudioSection label="Artificiais" />
-        <AudioContainer />
-        <AudioContainer />
-        <AudioContainer />
+        <AudioContainer src={`${process.env.AUDIO_URL}/wind`} />
+        <AudioContainer src={`${process.env.AUDIO_URL}/thunder`} />
+        <AudioContainer src={`${process.env.AUDIO_URL}/rain`} />
       </div>
 
       <div className="h-full flex flex-row md:h-full md:w-1/3 md:flex-col">
