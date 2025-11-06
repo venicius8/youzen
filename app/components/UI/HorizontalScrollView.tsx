@@ -1,4 +1,4 @@
-function HorizontalScrollView({
+export default function HorizontalScrollView({
   children,
   title,
 }: {
