@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "./components/UI/Button";
 import GreetingHeader from "./components/GreetingHeader";
 import Overlay from "./components/UI/Overlay";
@@ -11,9 +11,18 @@ import { allFeatures } from "@/utils/allFeatures";
 import Link from "next/link";
 
 export default function Main() {
-  const newUser = Object.keys(getResume()).length === 0;
+  const [totalSpentTime, setTotalSpentTime] = useState<Record<string, number>>(
+    {}
+  );
+  const [isClient, setIsClient] = useState(false);
   const [startQuiz, setStartQuiz] = useState(false);
-  const totalSpentTime = getResume();
+
+  useEffect(() => {
+    setIsClient(true);
+    setTotalSpentTime(getResume());
+  }, []);
+
+  const newUser = isClient && Object.keys(totalSpentTime).length === 0;
 
   return (
     <main className="bg-blue-100 h-screen text-center">
@@ -50,12 +59,10 @@ export default function Main() {
       ) : (
         <>
           <h2 className="text-2xl m-4">Suas atividades recentes</h2>
-          {Object.keys(getResume()).length !== 0 && (
+          {isClient && Object.keys(totalSpentTime).length > 0 && (
             <HorizontalScrollView>
-              {Object.entries(totalSpentTime).map((sortedEl, index) => {
-                const feature = allFeatures.find(
-                  (el) => el["nick"] === sortedEl[0]
-                );
+              {Object.entries(totalSpentTime).map(([nick], index) => {
+                const feature = allFeatures.find((el) => el.nick === nick);
 
                 return (
                   <HorizontalElement

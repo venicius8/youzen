@@ -1,12 +1,20 @@
 "use client";
-
+import { useState, useEffect } from "react";
 import { getResume } from "@/utils/timeTracker";
 import HorizontalElement from "../components/UI/HorizontalElement";
 import HorizontalScrollView from "../components/UI/HorizontalScrollView";
 import { allFeatures } from "@/utils/allFeatures";
 
 export default function Explore() {
-  const totalSpentTime = getResume();
+  const [totalSpentTime, setTotalSpentTime] = useState<Record<string, number>>(
+    {}
+  );
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    setTotalSpentTime(getResume());
+  }, []);
 
   return (
     <section>
@@ -21,15 +29,12 @@ export default function Explore() {
         <span className="text-3xl">Breathing</span>
       </div>
 
-      {Object.keys(getResume()).length !== 0 && (
+      {isClient && Object.keys(totalSpentTime).length > 0 && (
         <HorizontalScrollView title="Mais usados">
           {Object.entries(totalSpentTime)
             .sort((a, b) => b[1] - a[1])
-            .map((sortedEl, index) => {
-              const feature = allFeatures.find(
-                (el) => el["nick"] === sortedEl[0]
-              );
-
+            .map(([nick, time], index) => {
+              const feature = allFeatures.find((el) => el.nick === nick);
               return (
                 <HorizontalElement
                   key={index}
