@@ -7,8 +7,8 @@ import { addTime, getTime, saveTime } from "@/utils/timeTracker";
 export default function Phrase() {
   const [currentPhrase, setCurrentPhrase] = useState("");
   const [allPhrases, setAllPhrases] = useState<string[]>([]);
-  const [seconds, setSeconds] = useState(0);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  const secondsRef = useRef(0);
 
   useEffect(() => {
     setAllPhrases(Phrases);
@@ -17,17 +17,17 @@ export default function Phrase() {
   useEffect(() => {
     if (allPhrases.length === 0) return;
 
-    setSeconds(getTime("phrases"));
+    const saved = getTime("phrases");
+    secondsRef.current = saved;
 
     intervalRef.current = setInterval(() => {
-      setSeconds((prev) => prev + 1);
-      console.log(seconds);
+      secondsRef.current += 1;
     }, 1000);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
 
-      const totalTime = addTime("phrases", seconds);
+      const totalTime = addTime("phrases", secondsRef.current);
       saveTime("phrases", totalTime);
     };
   }, [allPhrases]);
