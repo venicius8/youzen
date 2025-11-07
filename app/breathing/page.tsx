@@ -93,7 +93,7 @@ export default function Breathing() {
   };
 
   return (
-    <section className="flex flex-col justify-between py-12 px-4 h-screen bg-linear-to-br from-blue-50 to-blue-200">
+    <section className="flex flex-col justify-between py-12 px-4 h-screen">
       <div className="flex-1 flex items-center justify-center">
         <div
           className="bg-linear-to-br from-cyan-400 to-blue-600 rounded-full shadow-2xl transition-all duration-100"

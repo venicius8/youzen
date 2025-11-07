@@ -1,3 +1,5 @@
+import { allFeatures } from "./allFeatures";
+
 interface Features {
   breathing: string;
   soundscape: string;
@@ -15,8 +17,16 @@ export const addTime = (feature: FeatureKey, time: number) =>
 export const saveTime = (feature: FeatureKey, newTime: number) =>
   localStorage.setItem(feature, `${newTime}`);
 
-// const breathing: number = Number(localStorage.getItem("breathing")) || 0;
+export const getResume = () => {
+  const usedFeatured = allFeatures.filter(
+    (el) => getTime(el["nick"] as FeatureKey) !== 0
+  );
 
-// const newTime = addTime(10, "breathing");
+  const resume: Record<string, number> = {};
 
-// saveTime("breathing", newTime);
+  usedFeatured.forEach((el) => {
+    resume[el.nick] = getTime(el["nick"] as FeatureKey);
+  });
+
+  return resume;
+};

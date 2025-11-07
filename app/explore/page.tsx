@@ -1,7 +1,13 @@
+"use client";
+
+import { getResume } from "@/utils/timeTracker";
 import HorizontalElement from "../components/UI/HorizontalElement";
 import HorizontalScrollView from "../components/UI/HorizontalScrollView";
+import { allFeatures } from "@/utils/allFeatures";
 
 export default function Explore() {
+  const totalSpentTime = getResume();
+
   return (
     <section>
       <div className="flex flex-col items-center my-20 gap-4">
@@ -13,6 +19,8 @@ export default function Explore() {
         ></div>
         <span className="text-3xl">Nome da funcionalidade</span>
       </div>
+
+      {/*
       <HorizontalScrollView title="Visto por último">
         <HorizontalElement img="/featuresImg/breathing.jpg" title="Breathing" />
         <HorizontalElement
@@ -21,14 +29,28 @@ export default function Explore() {
         />
         <HorizontalElement img="/featuresImg/phrases.jpg" title="Phrases" />
       </HorizontalScrollView>
+      */}
 
-      <HorizontalScrollView title="Recomendado">
-        <HorizontalElement img="greatImage" title="image title" />
-        <HorizontalElement img="greatImage" title="image title" />
-        <HorizontalElement img="greatImage" title="image title" />
-        <HorizontalElement img="greatImage" title="image title" />
+      <HorizontalScrollView title="Mais acessados">
+        {Object.entries(totalSpentTime)
+          .sort((a, b) => b[1] - a[1])
+          .map((sortedEl, index) => {
+            const feature = allFeatures.find(
+              (el) => el["nick"] === sortedEl[0]
+            );
+
+            return (
+              <HorizontalElement
+                key={index}
+                img={feature!.imageURL}
+                title={feature!.featureName}
+                link={`/${feature!.nick}`}
+              />
+            );
+          })}
       </HorizontalScrollView>
 
+      {/*
       <HorizontalScrollView title="Explorar técnicas">
         <HorizontalElement img="greatImage" title="Soundscape" />
         <HorizontalElement img="greatImage" title="Phrases" />
@@ -38,6 +60,7 @@ export default function Explore() {
         <HorizontalElement img="greatImage" title="image title" />
         <HorizontalElement img="greatImage" title="image title" />
       </HorizontalScrollView>
+      */}
     </section>
   );
 }
