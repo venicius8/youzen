@@ -31,7 +31,7 @@ export default function Explore() {
       </HorizontalScrollView>
       */}
 
-      <HorizontalScrollView title="Mais acessados">
+      <HorizontalScrollView title="Mais usados">
         {Object.entries(totalSpentTime)
           .sort((a, b) => b[1] - a[1])
           .map((sortedEl, index) => {
@@ -50,17 +50,25 @@ export default function Explore() {
           })}
       </HorizontalScrollView>
 
-      {/*
       <HorizontalScrollView title="Explorar técnicas">
-        <HorizontalElement img="greatImage" title="Soundscape" />
+        {allFeatures.map((el, index) => (
+          <HorizontalElement
+            key={index}
+            img={el.imageURL}
+            title={el.featureName}
+            link={`/${el.nick}`}
+          />
+        ))}
+
+        {/*
         <HorizontalElement img="greatImage" title="Phrases" />
         <HorizontalElement img="greatImage" title="image title" />
         <HorizontalElement img="greatImage" title="image title" />
         <HorizontalElement img="greatImage" title="image title" />
         <HorizontalElement img="greatImage" title="image title" />
         <HorizontalElement img="greatImage" title="image title" />
+        */}
       </HorizontalScrollView>
-      */}
     </section>
   );
 }
