@@ -1,8 +1,31 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import AudioContainer from "./components/AudioContainer";
 import AudioSection from "./components/AudioSection";
+import { addTime, getTime, saveTime } from "@/utils/timeTracker";
 
 export default function Soundscape() {
-  const audios = process.env.AUDIOS_URL;
+  const secondsRef = useRef(0);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const audios = process.env.NEXT_PUBLIC_AUDIOS_URL;
+
+  useEffect(() => {
+    const saved = getTime("soundscape");
+    secondsRef.current = saved;
+
+    intervalRef.current = setInterval(() => {
+      secondsRef.current += 1;
+    }, 1000);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+
+      const totalTime = addTime("soundscape", secondsRef.current);
+      saveTime("soundscape", totalTime);
+    };
+  }, []);
 
   return (
     <section className="h-screen flex flex-col md:flex-row">
