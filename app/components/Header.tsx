@@ -65,7 +65,7 @@ export default function Header() {
       </div>
       <nav>
         {innerWidth > 767 ? (
-          <ul className="flex gap-8">
+          <ul className="flex gap-8 text-black">
             <NavLink label="Explorar" href="/explore" />
             <NavLink label="Perfil" href="/profile" />
             <NavLink label="Sobre" href="/about" />
@@ -81,7 +81,7 @@ export default function Header() {
         <>
           <aside className="w-90 h-screen bg-blue-400 fixed right-0 top-0 border-l-2 border-blue-300 z-100">
             <button
-              className="text-6xl cursor-pointer ml-6"
+              className="text-6xl cursor-pointer ml-6 text-black"
               onClick={() => setMenu(!menu)}
             >
               ×
