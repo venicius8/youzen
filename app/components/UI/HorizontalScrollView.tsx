@@ -3,7 +3,7 @@ export default function HorizontalScrollView({
   title,
 }: {
   children: React.ReactNode;
-  title: string;
+  title?: string;
 }) {
   return (
     <section>

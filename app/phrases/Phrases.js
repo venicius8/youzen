@@ -93,7 +93,6 @@ const Phrases = [
   "O que parece impossível é só uma questão de perspectiva.",
   "A vida é curta demais para viver o sonho de outra pessoa.",
   "Você é o arquiteto do seu destino — construa com ousadia.",
-  "O que você chama de obstáculo, eu chamo de oportunidade.",
   "A persistência é o superpoder dos comuns que vencem.",
   "Você não falhou — apenas descobriu 99 formas que não funcionam.",
   "O amanhã pertence a quem acredita no hoje.",

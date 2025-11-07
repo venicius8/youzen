@@ -20,11 +20,8 @@ export default function Button({
 }) {
   const [bg, hoverBg] = colorVariants[type];
 
-  return (
-    <button
-      className={`${bg} ${hoverBg} p-4 m-4 rounded-2xl w-2/3 max-w-2xl text-white font-bold text-xl cursor-pointer transition`}
-    >
-      {url ? <Link href={url}>{children}</Link> : children}
-    </button>
-  );
+  const classes = `${bg} ${hoverBg} p-4 m-4 rounded-2xl w-2/3 max-w-2xl text-white font-bold text-xl cursor-pointer transition`;
+  const btn = <button className={classes}>{children}</button>;
+
+  return url ? <Link href={url}>{btn}</Link> : <>{btn}</>;
 }

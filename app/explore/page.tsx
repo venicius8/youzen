@@ -14,41 +14,33 @@ export default function Explore() {
         <h1 className="text-3xl font-bold">Destaque de hoje</h1>
         <div
           role="img"
-          className="w-2/3 aspect-square bg-white max-w-130 rounded-3xl bg-cover border"
-          style={{ backgroundImage: `url(/featuresImg/phrases.jpg)` }}
+          className="w-2/3 aspect-square bg-white max-w-130 rounded-3xl bg-cover border cursor-pointer"
+          style={{ backgroundImage: `url(/featuresImg/breathing.jpg)` }}
+          onClick={() => (window.location.href = "/breathing")}
         ></div>
-        <span className="text-3xl">Nome da funcionalidade</span>
+        <span className="text-3xl">Breathing</span>
       </div>
 
-      {/*
-      <HorizontalScrollView title="Visto por último">
-        <HorizontalElement img="/featuresImg/breathing.jpg" title="Breathing" />
-        <HorizontalElement
-          img="/featuresImg/soundscape.jpg"
-          title="Soundscape"
-        />
-        <HorizontalElement img="/featuresImg/phrases.jpg" title="Phrases" />
-      </HorizontalScrollView>
-      */}
+      {Object.keys(getResume()).length !== 0 && (
+        <HorizontalScrollView title="Mais usados">
+          {Object.entries(totalSpentTime)
+            .sort((a, b) => b[1] - a[1])
+            .map((sortedEl, index) => {
+              const feature = allFeatures.find(
+                (el) => el["nick"] === sortedEl[0]
+              );
 
-      <HorizontalScrollView title="Mais usados">
-        {Object.entries(totalSpentTime)
-          .sort((a, b) => b[1] - a[1])
-          .map((sortedEl, index) => {
-            const feature = allFeatures.find(
-              (el) => el["nick"] === sortedEl[0]
-            );
-
-            return (
-              <HorizontalElement
-                key={index}
-                img={feature!.imageURL}
-                title={feature!.featureName}
-                link={`/${feature!.nick}`}
-              />
-            );
-          })}
-      </HorizontalScrollView>
+              return (
+                <HorizontalElement
+                  key={index}
+                  img={feature!.imageURL}
+                  title={feature!.featureName}
+                  link={`/${feature!.nick}`}
+                />
+              );
+            })}
+        </HorizontalScrollView>
+      )}
 
       <HorizontalScrollView title="Explorar técnicas">
         {allFeatures.map((el, index) => (
@@ -59,15 +51,6 @@ export default function Explore() {
             link={`/${el.nick}`}
           />
         ))}
-
-        {/*
-        <HorizontalElement img="greatImage" title="Phrases" />
-        <HorizontalElement img="greatImage" title="image title" />
-        <HorizontalElement img="greatImage" title="image title" />
-        <HorizontalElement img="greatImage" title="image title" />
-        <HorizontalElement img="greatImage" title="image title" />
-        <HorizontalElement img="greatImage" title="image title" />
-        */}
       </HorizontalScrollView>
     </section>
   );

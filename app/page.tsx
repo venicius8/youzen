@@ -4,10 +4,16 @@ import { useState } from "react";
 import Button from "./components/UI/Button";
 import GreetingHeader from "./components/GreetingHeader";
 import Overlay from "./components/UI/Overlay";
+import { getResume } from "@/utils/timeTracker";
+import HorizontalElement from "./components/UI/HorizontalElement";
+import HorizontalScrollView from "./components/UI/HorizontalScrollView";
+import { allFeatures } from "@/utils/allFeatures";
+import Link from "next/link";
 
 export default function Main() {
-  const newUser: boolean = true;
+  const newUser = Object.keys(getResume()).length === 0;
   const [startQuiz, setStartQuiz] = useState(false);
+  const totalSpentTime = getResume();
 
   return (
     <main className="bg-blue-100 h-screen text-center">
@@ -20,9 +26,10 @@ export default function Main() {
             sua primeira atividade.
           </h2>
 
-          <div onClick={() => setStartQuiz(!startQuiz)}>
+          {/*<div onClick={() => setStartQuiz(!startQuiz)}></div>*/}
+          <Link href={"/explore"}>
             <Button type="primary">Começar</Button>
-          </div>
+          </Link>
           {startQuiz && (
             <>
               <div className="fixed w-2/3 max-w-md h-150 bg-blue-200 left-1/2 top-1/2 -translate-1/2 border rounded-4xl flex flex-col justify-between px-8 py-15 z-110">
@@ -42,7 +49,28 @@ export default function Main() {
         </>
       ) : (
         <>
-          <h2 className="text-2xl m-4">Sua atividades recentes</h2>
+          <h2 className="text-2xl m-4">Suas atividades recentes</h2>
+          {Object.keys(getResume()).length !== 0 && (
+            <HorizontalScrollView>
+              {Object.entries(totalSpentTime).map((sortedEl, index) => {
+                const feature = allFeatures.find(
+                  (el) => el["nick"] === sortedEl[0]
+                );
+
+                return (
+                  <HorizontalElement
+                    key={index}
+                    img={feature!.imageURL}
+                    title={feature!.featureName}
+                    link={`/${feature!.nick}`}
+                  />
+                );
+              })}
+            </HorizontalScrollView>
+          )}
+          <Button type="primary" url="/explore">
+            Ir para página Explorar
+          </Button>
         </>
       )}
     </main>

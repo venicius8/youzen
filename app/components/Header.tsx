@@ -53,14 +53,13 @@ export default function Header() {
   return (
     <header
       className={`flex justify-between items-center top-0 w-full h-16 z-100 shadow-2xl fixed px-10 duration-300 ${
-        scrolled ? "bg-green-100" : "bg-black/30 border-black border-b"
+        scrolled
+          ? "bg-blue-100 text-black"
+          : "bg-black/30 border-black border-b text-white"
       }`}
     >
       <div>
-        <Link
-          href={"/"}
-          className={`text-4xl ${scrolled ? "text-black" : "text-white"}`}
-        >
+        <Link href="/" className="text-4xl">
           YouZen
         </Link>
       </div>
@@ -72,10 +71,7 @@ export default function Header() {
             <NavLink label="Sobre" href="/about" />
           </ul>
         ) : (
-          <button
-            onClick={() => setMenu(!menu)}
-            className="text-6xl text-white cursor-pointer"
-          >
+          <button onClick={() => setMenu(!menu)} className="text-6xl">
             ≡
           </button>
         )}
@@ -90,7 +86,7 @@ export default function Header() {
             >
               ×
             </button>
-            <ul className="flex flex-col gap-6 mt-4">
+            <ul className="flex flex-col gap-6 mt-4 text-black">
               <NavMenu label="Explorar" href="/explore" />
               <NavMenu label="Perfil" href="/profile" />
               <NavMenu label="Sobre" href="/about" />
