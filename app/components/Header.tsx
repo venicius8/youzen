@@ -7,20 +7,19 @@ import Overlay from "./UI/Overlay";
 type navItemProps = { label: string; href: string };
 
 const NavLink = ({ label, href }: navItemProps) => (
-  <li>
-    <Link
-      href={href}
-      className="bg-white text-xl p-2 rounded-xl hover:border-b-2 duration-100"
-    >
+  <Link href={href}>
+    <li className="bg-white text-xl p-2 rounded-xl border-white border hover:border-black duration-300">
       {label}
-    </Link>
-  </li>
+    </li>
+  </Link>
 );
 
 const NavMenu = ({ label, href }: navItemProps) => (
-  <li className="bg-blue-100 w-full py-2 text-3xl border-y border-white text-center">
-    <Link href={href}>{label}</Link>
-  </li>
+  <Link href={href}>
+    <li className="bg-blue-100 w-full py-2 text-3xl border-y border-white text-center">
+      {label}
+    </li>
+  </Link>
 );
 
 export default function Header() {
@@ -71,7 +70,10 @@ export default function Header() {
             <NavLink label="Sobre" href="/about" />
           </ul>
         ) : (
-          <button onClick={() => setMenu(!menu)} className="text-6xl">
+          <button
+            onClick={() => setMenu(!menu)}
+            className="text-6xl cursor-pointer hover:scale-110 duration-300"
+          >
             ≡
           </button>
         )}
