@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Phrases from "./Phrases";
-import { addTime, getTime, saveTime } from "@/utils/timeTracker";
+import { getTime, saveTime } from "@/utils/timeTracker";
 
 export default function Phrase() {
   const [currentPhrase, setCurrentPhrase] = useState("");
@@ -26,9 +26,7 @@ export default function Phrase() {
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
-
-      const totalTime = addTime("phrases", secondsRef.current);
-      saveTime("phrases", totalTime);
+      saveTime("phrases", secondsRef.current);
     };
   }, [allPhrases]);
 

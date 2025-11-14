@@ -15,13 +15,11 @@ export const getTime = (feature: FeatureKey): number => {
   return Number(localStorage.getItem(feature)) || 0;
 };
 
-export const addTime = (feature: FeatureKey, time: number): number => {
+export const saveTime = (feature: FeatureKey, time: number) => {
   if (!isBrowser) return time;
-  return Number(localStorage.getItem(feature)) || 0 + time;
-};
 
-export const saveTime = (feature: FeatureKey, newTime: number) => {
-  if (!isBrowser) return;
+  const currentTime = Number(localStorage.getItem(feature)) || 0 + time;
+  const newTime = currentTime + time;
   localStorage.setItem(feature, `${newTime}`);
 };
 

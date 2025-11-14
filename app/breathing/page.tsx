@@ -1,6 +1,6 @@
 "use client";
 
-import { addTime, getTime, saveTime } from "@/utils/timeTracker";
+import { saveTime } from "@/utils/timeTracker";
 import { useState, useEffect, useRef } from "react";
 
 export default function Breathing() {
@@ -25,9 +25,6 @@ export default function Breathing() {
   };
 
   useEffect(() => {
-    const saved = getTime("breathing");
-    secondsRef.current = saved;
-
     intervalRef.current = setInterval(() => {
       secondsRef.current += 1;
     }, 1000);
@@ -35,8 +32,7 @@ export default function Breathing() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
 
-      const totalTime = addTime("breathing", secondsRef.current);
-      saveTime("breathing", totalTime);
+      saveTime("breathing", secondsRef.current);
     };
   }, []);
 
