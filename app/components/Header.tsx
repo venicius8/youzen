@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import DesktopNav from "./Header/DesktopNav";
 import MobileSidebar from "./Header/MobileSidebar";
-import { useWindowWidth } from "./Header/useWindowWidth";
+import { useWindowWidth } from "./useWindowWidth";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);

@@ -4,12 +4,14 @@ import { allFeatures } from "@/utils/allFeatures";
 import { getResume } from "@/utils/timeTracker";
 import { useState, useEffect } from "react";
 import Overlay from "../components/UI/Overlay";
+import { useWindowWidth } from "../components/useWindowWidth";
 
 export default function Profile() {
   const [totalSpentTime, setTotalSpentTime] = useState<Record<string, number>>(
     {}
   );
   const [currentFeature, setCurrentFeature] = useState("");
+  const width = useWindowWidth();
 
   const currentFeatureObj = allFeatures.find(
     (el) => el.nick === currentFeature
@@ -35,15 +37,16 @@ export default function Profile() {
 
   return (
     <section className="flex flex-col mt-20 mx-4">
-      <h1 className="text-4xl text-center my-4 font-bold">Seu perfil</h1>
-
+      <h1 className="text-4xl my-4 font-bold text-center md:text-start">
+        Seu perfil
+      </h1>
       {Object.entries(totalSpentTime).map(([nick, number]) => {
         const feature = allFeatures.find((el) => el.nick === nick);
 
         return (
           <div
             key={nick}
-            className="flex items-center gap-4 mt-4 cursor-pointer w-full bg-linear-to-br from-blue-200 to-blue-300 rounded"
+            className="flex items-center gap-4 mt-4 cursor-pointer w-full bg-linear-to-br from-blue-200 to-blue-300 rounded md:w-2/5"
             onClick={() => setCurrentFeature(nick)}
           >
             <div
@@ -58,7 +61,7 @@ export default function Profile() {
           </div>
         );
       })}
-      {currentFeature && (
+      {currentFeature && width < 768 && (
         <>
           <dialog
             open
@@ -68,10 +71,19 @@ export default function Profile() {
               Detalhes sobre {currentFeatureObj?.featureName}
             </h1>
             <p>{currentFeatureObj?.about}</p>
-            <p></p>
           </dialog>
           <Overlay onClick={() => setCurrentFeature("")} zIndex={100} />
         </>
+      )}
+      {width > 767 && currentFeature && (
+        <aside className="fixed w-1/2 h-2/3 bg-blue-200 top-1/2 right-4 -translate-y-1/2 p-8 text-center">
+          <h1 className="text-3xl">
+            Detalhes sobre {currentFeatureObj?.featureName}
+          </h1>
+          <div className="w-full h-96 bg-blue-50 p-4">
+            <p>{currentFeatureObj?.about}</p>
+          </div>
+        </aside>
       )}
     </section>
   );
