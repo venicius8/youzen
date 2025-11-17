@@ -12,6 +12,10 @@ export default function Header() {
   const width = useWindowWidth();
 
   useEffect(() => {
+    if (width > 767) setMenu(false);
+  }, [width]);
+
+  useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll);
 
