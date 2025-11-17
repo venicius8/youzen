@@ -14,8 +14,16 @@ const NavLink = ({ label, href }: navItemProps) => (
   </Link>
 );
 
-const NavMenu = ({ label, href }: navItemProps) => (
-  <Link href={href}>
+const NavMenu = ({
+  label,
+  href,
+  event,
+}: {
+  label: string;
+  href: string;
+  event: () => void;
+}) => (
+  <Link href={href} onClick={event}>
     <li className="bg-blue-100 w-full py-2 text-3xl border-y border-white text-center">
       {label}
     </li>
@@ -89,9 +97,21 @@ export default function Header() {
               ×
             </button>
             <ul className="flex flex-col gap-6 mt-4 text-black">
-              <NavMenu label="Explorar" href="/explore" />
-              <NavMenu label="Perfil" href="/profile" />
-              <NavMenu label="Sobre" href="/about" />
+              <NavMenu
+                label="Explorar"
+                href="/explore"
+                event={() => setMenu(false)}
+              />
+              <NavMenu
+                label="Perfil"
+                href="/profile"
+                event={() => setMenu(false)}
+              />
+              <NavMenu
+                label="Sobre"
+                href="/about"
+                event={() => setMenu(false)}
+              />
             </ul>
           </aside>
           <Overlay onClick={() => setMenu(!menu)} zIndex={90} />
