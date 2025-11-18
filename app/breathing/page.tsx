@@ -10,8 +10,8 @@ export default function Breathing() {
   >("Quando quiser...");
   const [isRunning, setIsRunning] = useState(false);
 
-  const [inhale, setInhale] = useState(6000);
-  const [holdInhale, setHoldInhale] = useState(2000);
+  const [inhale, setInhale] = useState(3000);
+  const [holdInhale, setHoldInhale] = useState(4000);
   const [exhale, setExhale] = useState(6000);
   const [holdExhale, setHoldExhale] = useState(2000);
 
@@ -119,6 +119,7 @@ export default function Breathing() {
               min="1000"
               max="15000"
               step="500"
+              defaultValue={inhale}
               onChange={(e) => setInhale(Number(e.target.value))}
               className="w-full"
               disabled={isRunning}
@@ -134,6 +135,7 @@ export default function Breathing() {
               min="0"
               max="15000"
               step="500"
+              defaultValue={holdInhale}
               onChange={(e) => setHoldInhale(Number(e.target.value))}
               className="w-full"
               disabled={isRunning}
@@ -149,6 +151,7 @@ export default function Breathing() {
               min="1000"
               max="15000"
               step="500"
+              defaultValue={exhale}
               onChange={(e) => setExhale(Number(e.target.value))}
               className="w-full"
               disabled={isRunning}
@@ -164,6 +167,7 @@ export default function Breathing() {
               min="0"
               max="15000"
               step="500"
+              defaultValue={holdExhale}
               onChange={(e) => setHoldExhale(Number(e.target.value))}
               className="w-full"
               disabled={isRunning}
