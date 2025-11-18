@@ -157,7 +157,7 @@ export default function Breathing() {
               disabled={isRunning}
             />
             <span className="text-xs text-gray-500">
-              {(exhale / 1000).toFixed(1)}s
+              {(exhale / 1000).toFixed(1)}
             </span>
           </div>
           <div>
