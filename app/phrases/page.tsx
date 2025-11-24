@@ -9,6 +9,7 @@ export default function Phrase() {
   const [allPhrases, setAllPhrases] = useState<string[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
   const secondsRef = useRef(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     setAllPhrases(Phrases);
@@ -38,7 +39,11 @@ export default function Phrase() {
   };
 
   const handleLocalClick = () => {
-    nextPhrase();
+    setIsAnimating(true);
+    setTimeout(() => {
+      setIsAnimating(false);
+      nextPhrase();
+    }, 1000);
   };
 
   return (
@@ -49,10 +54,12 @@ export default function Phrase() {
       ></div>
       <div className="bg-blue-500/10 w-3/4" onClick={handleLocalClick}></div>
       <span
-        className="fixed left-1/2 top-1/2 -translate-1/2 text-4xl text-center w-4/5 rounded-2xl bg-white/30 p-4 md:w-1/3"
+        className={`fixed left-1/2 top-1/2 -translate-1/2 text-4xl
+          text-center w-4/5 rounded-2xl bg-white/30 p-4 md:w-1/3
+          duration-700 ${isAnimating ? "opacity-0" : "opacity-100"}`}
         onClick={(e) => e.stopPropagation()}
       >
-        {currentPhrase || `Clique em qualquer lugar para começar`}
+        {currentPhrase || `Clique em qualquer lugar ao redor para começar`}
       </span>
     </section>
   );
