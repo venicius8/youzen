@@ -1,7 +1,7 @@
 "use client";
 
 import { allFeatures } from "@/utils/allFeatures";
-import { getResume } from "@/utils/timeTracker";
+import { FeatureKey, getResume, saveTime } from "@/utils/timeTracker";
 import { useState, useEffect } from "react";
 import Overlay from "../components/UI/Overlay";
 import { useWindowWidth } from "../components/useWindowWidth";
@@ -16,6 +16,11 @@ export default function Profile() {
   const currentFeatureObj = allFeatures.find(
     (el) => el.nick === currentFeature
   );
+
+  const clearFeatureTime = (feature: FeatureKey) => {
+    saveTime(feature, 0);
+    setTotalSpentTime(getResume());
+  };
 
   useEffect(() => {
     setTotalSpentTime(getResume());
@@ -61,29 +66,39 @@ export default function Profile() {
           </div>
         );
       })}
-      {currentFeature && width < 768 && (
+
+      {currentFeature && (
         <>
-          <dialog
-            open
-            className="w-4/5 min-h-96 bg-white fixed left-1/2 top-1/2 -translate-1/2 p-6 rounded-xl z-110"
-          >
+          <div className="md:hidden block">
+            <dialog
+              open
+              className="w-4/5 min-h-96 bg-white fixed left-1/2 top-1/2 -translate-1/2 p-6 rounded-xl z-110"
+            >
+              <h1 className="text-3xl">
+                Detalhes sobre {currentFeatureObj?.featureName}
+              </h1>
+              <p>{currentFeatureObj?.about}</p>
+              <button
+                className="bg-red-600 text-white px-4 py-2 rounded mt-4 hover:bg-red-700 duration-200"
+                onClick={() =>
+                  clearFeatureTime(currentFeatureObj?.nick as FeatureKey)
+                }
+              >
+                Deletar tempo
+              </button>
+            </dialog>
+            <Overlay onClick={() => setCurrentFeature("")} zIndex={100} />
+          </div>
+
+          <div className="fixed w-1/2 h-2/3 bg-blue-200 top-1/2 right-4 -translate-y-1/2 p-8 text-center md:block hidden">
             <h1 className="text-3xl">
               Detalhes sobre {currentFeatureObj?.featureName}
             </h1>
-            <p>{currentFeatureObj?.about}</p>
-          </dialog>
-          <Overlay onClick={() => setCurrentFeature("")} zIndex={100} />
-        </>
-      )}
-      {width > 767 && currentFeature && (
-        <dialog className="fixed w-1/2 h-2/3 bg-blue-200 top-1/2 right-4 -translate-y-1/2 p-8 text-center">
-          <h1 className="text-3xl">
-            Detalhes sobre {currentFeatureObj?.featureName}
-          </h1>
-          <div className="w-full h-96 bg-blue-50 p-4">
-            <p>{currentFeatureObj?.about}</p>
+            <div className="w-full h-96 bg-blue-50 p-4">
+              <p>{currentFeatureObj?.about}</p>
+            </div>
           </div>
-        </dialog>
+        </>
       )}
     </section>
   );

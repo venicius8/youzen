@@ -8,7 +8,7 @@ interface Features {
   phrases: string;
 }
 
-type FeatureKey = keyof Features;
+export type FeatureKey = keyof Features;
 
 export const getTime = (feature: FeatureKey): number => {
   if (!isBrowser) return 0;
