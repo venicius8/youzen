@@ -76,14 +76,14 @@ export default function Profile() {
         </>
       )}
       {width > 767 && currentFeature && (
-        <aside className="fixed w-1/2 h-2/3 bg-blue-200 top-1/2 right-4 -translate-y-1/2 p-8 text-center">
+        <dialog className="fixed w-1/2 h-2/3 bg-blue-200 top-1/2 right-4 -translate-y-1/2 p-8 text-center">
           <h1 className="text-3xl">
             Detalhes sobre {currentFeatureObj?.featureName}
           </h1>
           <div className="w-full h-96 bg-blue-50 p-4">
             <p>{currentFeatureObj?.about}</p>
           </div>
-        </aside>
+        </dialog>
       )}
     </section>
   );

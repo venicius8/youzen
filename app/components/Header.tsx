@@ -37,16 +37,14 @@ export default function Header() {
           </Link>
         </div>
         <nav>
-          {width > 767 ? (
-            <DesktopNav />
-          ) : (
-            <button
-              onClick={() => setMenu(!menu)}
-              className="text-6xl cursor-pointer hover:scale-110 duration-300"
-            >
-              ≡
-            </button>
-          )}
+          <DesktopNav />
+
+          <button
+            onClick={() => setMenu(!menu)}
+            className="text-6xl cursor-pointer hover:scale-110 duration-300 block md:hidden"
+          >
+            ≡
+          </button>
         </nav>
       </header>
       {width < 768 && menu && (
