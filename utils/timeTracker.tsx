@@ -23,6 +23,12 @@ export const saveTime = (feature: FeatureKey, time: number) => {
   localStorage.setItem(feature, `${newTime}`);
 };
 
+export const clearTime = (feature: FeatureKey) => {
+  if (!isBrowser) return;
+
+  localStorage.setItem(feature, "0");
+};
+
 export const getResume = (): Record<string, number> => {
   if (!isBrowser) return {};
 
