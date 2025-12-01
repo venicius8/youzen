@@ -47,9 +47,7 @@ export default function Header() {
           </button>
         </nav>
       </header>
-      {width < 768 && menu && (
-        <MobileSidebar event={() => setMenu(!menu)}></MobileSidebar>
-      )}
+      {menu && <MobileSidebar event={() => setMenu(!menu)}></MobileSidebar>}
     </>
   );
 }

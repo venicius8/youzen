@@ -1,12 +1,7 @@
 "use client";
 
 import { allFeatures } from "@/utils/allFeatures";
-import {
-  clearTime,
-  FeatureKey,
-  getResume,
-  saveTime,
-} from "@/utils/timeTracker";
+import { clearTime, FeatureKey, getResume } from "@/utils/timeTracker";
 import { useState, useEffect } from "react";
 import Overlay from "../components/UI/Overlay";
 import Button from "../components/UI/Button";
