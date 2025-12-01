@@ -32,11 +32,17 @@ export default function Soundscape() {
         <AudioContainer src={`${audios}/owl.mp3`} label="Coruja" />
         <AudioContainer src={`${audios}/bird.mp3`} label="Pássaro" />
         <AudioContainer src={`${audios}/cricket.mp3`} label="Grilo" />
+        <AudioContainer src={`${audios}/frog.mp3`} label="Sapo" />
 
         <AudioSection label="Natureza" />
         <AudioContainer src={`${audios}/wind.mp3`} label="Vento" />
         <AudioContainer src={`${audios}/thunder.mp3`} label="Trovão" />
+        <AudioContainer src={`${audios}/fire.mp3`} label="Fogo" />
+
+        <AudioSection label="Água" />
         <AudioContainer src={`${audios}/rain.mp3`} label="Chuva" />
+        <AudioContainer src={`${audios}/river.mp3`} label="Rio" />
+        <AudioContainer src={`${audios}/beach.mp3`} label="Praia" />
       </div>
     </section>
   );
