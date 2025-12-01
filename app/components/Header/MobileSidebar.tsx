@@ -11,16 +11,26 @@ const NavMenu = ({
   event: () => void;
 }) => (
   <Link href={href} onClick={event}>
-    <li className="bg-blue-100 w-full py-2 text-3xl border-y border-white text-center">
+    <li className="bg-blue-100 w-full py-2 text-3xl border-y border-white text-center hover:bg-blue-200 duration-200 ease-in-out">
       {label}
     </li>
   </Link>
 );
 
-export default function MobileSidebar({ event }: { event: () => void }) {
+export default function MobileSidebar({
+  event,
+  state,
+}: {
+  event: () => void;
+  state: boolean;
+}) {
   return (
     <>
-      <aside className="w-90 h-screen bg-blue-400 fixed right-0 top-0 border-l-2 border-blue-300 md: z-110">
+      <aside
+        className={`w-70 h-screen bg-blue-400 fixed top-0 border-l-2 border-blue-300 z-110 transition-all duration-300 ease-in-out ${
+          state ? "right-0" : "-right-70"
+        }`}
+      >
         <button
           className="text-6xl cursor-pointer ml-6 text-black"
           onClick={event}
@@ -33,7 +43,9 @@ export default function MobileSidebar({ event }: { event: () => void }) {
           <NavMenu label="Sobre" href="/about" event={event} />
         </ul>
       </aside>
-      <Overlay onClick={event} zIndex={100} />
+      <div className={`${state ? "block" : "hidden"}`}>
+        <Overlay onClick={event} zIndex={100} />
+      </div>
     </>
   );
 }

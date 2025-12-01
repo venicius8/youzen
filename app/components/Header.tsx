@@ -47,7 +47,8 @@ export default function Header() {
           </button>
         </nav>
       </header>
-      {menu && <MobileSidebar event={() => setMenu(!menu)}></MobileSidebar>}
+
+      <MobileSidebar event={() => setMenu(!menu)} state={menu}></MobileSidebar>
     </>
   );
 }
