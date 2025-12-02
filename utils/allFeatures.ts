@@ -28,4 +28,11 @@ export const allFeatures: Features[] = [
     imageURL: "/featuresImg/phrases.jpg",
     tags: ["read", "happiness", "mindfulness", "motivacional"],
   },
+  {
+    nick: "gratitude",
+    featureName: "Gratitude",
+    about: "Registre as coisas pelas quais você é grato(a).",
+    imageURL: "/featuresImg/gratitude.png",
+    tags: ["journal", "mindfulness", "thankfulness"],
+  },
 ];

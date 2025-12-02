@@ -6,6 +6,7 @@ interface Features {
   breathing: string;
   soundscape: string;
   phrases: string;
+  gratitude: string;
 }
 
 export type FeatureKey = keyof Features;
