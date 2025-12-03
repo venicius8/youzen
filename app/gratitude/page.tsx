@@ -48,7 +48,6 @@ export default function GratitudePage() {
     };
 
     inputRef.current!.value = "";
-    inputRef.current?.focus();
     setEntries([...entries, newEntry]);
   };
 
@@ -87,7 +86,7 @@ export default function GratitudePage() {
   }, []);
 
   return (
-    <section className="mt-20 flex flex-col items-center">
+    <section className="my-20 flex flex-col items-center">
       <div className="w-4/5 h-76 bg-linear-to-br from-white to-gray-200 border-2 border-gray-400 rounded-2xl flex flex-col justify-center">
         <h1 className="text-4xl font-bold text-center">Gratitude</h1>
         <p className="text-center text-xl mt-4 px-4">
@@ -123,7 +122,7 @@ export default function GratitudePage() {
                 className="border border-gray-600 flex flex-row justify-between items-center mb-4 p-2 gap-4 bg-linear-to-br from-gray-100 to-gray-300 rounded-xl shadow-md"
                 key={entry.id}
               >
-                <p className="border border-gray-400 min-h-12 w-full text-xl flex items-center bg-white rounded-xl px-4">
+                <p className="border border-gray-400 min-h-12 w-fit min-w-0 text-xl flex items-center bg-white rounded-xl px-4 overflow-hidden">
                   {entry.quote}
                 </p>
                 <button
@@ -147,13 +146,13 @@ export default function GratitudePage() {
               Informações adicionais
             </h1>
             <div>
-              <p className="text-2xl">{currentEntry!.quote}</p>
-              <div className="mt-4">
-                <p>Data: {convertDate(currentEntry!.date)}</p>
-                <p>Hora: {convertTime(currentEntry!.date)}</p>
-              </div>
+              <p className="text-2xl my-8 py-2 border-y overflow-hidden max-h-96">
+                {currentEntry!.quote}
+              </p>
+              <p>Data: {convertDate(currentEntry!.date)}</p>
+              <p>Hora: {convertTime(currentEntry!.date)}</p>
             </div>
-            <div className="flex flex-row gap-4">
+            <div className="flex flex-row gap-4 mt-6">
               <button
                 className="h-15 w-full bg-blue-500 hover:bg-blue-600 cursor-pointer duration-300 rounded-sm text-xl font-bold text-white"
                 onClick={() => setIsEntryInfoVisible(false)}
