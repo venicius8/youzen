@@ -92,14 +92,14 @@ export default function GratitudePage() {
         <p className="text-center text-xl mt-4 px-4">
           Registre as coisas que você é grato(a) hoje.
         </p>
-        <div className="flex flex-row items-center mt-8 gap-4 px-10">
+        <div className="flex flex-row items-center mt-8 gap-4 px-10 h-10 md:h-15">
           <input
             ref={inputRef}
-            className="w-full h-18 mx-auto block p-4 border-2 border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-400 duration-300 text-sm md:text-2xl"
+            className="w-full h-full mx-auto block p-4 border-2 border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-400 duration-300 text-sm md:text-2xl"
             placeholder="Hoje sou grato(a) por..."
           ></input>
           <button
-            className="h-18 aspect-square bg-blue-500 text-white rounded-2xl text-3xl font-bold hover:bg-blue-600 duration-300 cursor-pointer"
+            className="h-full aspect-square bg-blue-500 text-white rounded-2xl text-3xl font-bold hover:bg-blue-600 duration-300 cursor-pointer"
             onClick={() => addEntry()}
           >
             +
