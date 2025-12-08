@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import Phrases from "./Phrases";
-import { getTime, saveTime } from "@/utils/timeTracker";
+import { saveTime } from "@/utils/timeTracker";
 
 export default function Phrase() {
   const [currentPhrase, setCurrentPhrase] = useState("");
@@ -16,11 +16,6 @@ export default function Phrase() {
   }, []);
 
   useEffect(() => {
-    if (allPhrases.length === 0) return;
-
-    const saved = getTime("phrases");
-    secondsRef.current = saved;
-
     intervalRef.current = setInterval(() => {
       secondsRef.current += 1;
     }, 1000);
@@ -29,7 +24,7 @@ export default function Phrase() {
       if (intervalRef.current) clearInterval(intervalRef.current);
       saveTime("phrases", secondsRef.current);
     };
-  }, [allPhrases]);
+  }, []);
 
   const nextPhrase = () => {
     const randomIndex = Math.floor(Math.random() * allPhrases.length);
