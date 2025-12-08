@@ -16,11 +16,39 @@ export default function Main() {
   );
   const [isClient, setIsClient] = useState(false);
   const [startQuiz, setStartQuiz] = useState(false);
+  const [gratitudeQuote, setGratitudeQuote] = useState<{
+    quote: string;
+    date: string;
+  } | null>(null);
 
   useEffect(() => {
     setIsClient(true);
     setTotalSpentTime(getResume());
   }, []);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("gratitudeEntries");
+    if (stored) {
+      try {
+        const entries = JSON.parse(stored);
+
+        if (Array.isArray(entries) && entries.length > 0) {
+          const randomQuoteIndex = Math.floor(Math.random() * entries.length);
+          const randomQuote = entries[randomQuoteIndex];
+
+          setGratitudeQuote(randomQuote);
+        } else {
+          setGratitudeQuote(null);
+        }
+      } catch (error) {
+        console.error("Error: " + error);
+        setGratitudeQuote(null);
+      }
+    }
+  }, []);
+
+  const convertDate = (date: string) =>
+    new Date(date.split("T")[0]).toLocaleDateString();
 
   const newUser = isClient && Object.keys(totalSpentTime).length === 0;
 
@@ -78,6 +106,14 @@ export default function Main() {
           <Button type="primary" url="/explore">
             Ir para página Explorar
           </Button>
+          {gratitudeQuote && (
+            <div className="my-8 mb-8 mx-6 py-4 bg-white/70 max-w-3xl shadow-2xl rounded-xl">
+              <p className="text-2xl md:text-3xl">"{gratitudeQuote?.quote}"</p>
+              <p className="text-md md:text-xl">
+                — Um ser determinado ({convertDate(gratitudeQuote?.date)})
+              </p>
+            </div>
+          )}
         </>
       )}
     </main>
