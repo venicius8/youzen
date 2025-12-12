@@ -107,11 +107,15 @@ export default function Main() {
             Ir para página Explorar
           </Button>
           {gratitudeQuote && (
-            <div className="my-8 mb-8 mx-6 py-4 bg-white/70 max-w-3xl shadow-2xl rounded-xl">
-              <p className="text-2xl md:text-3xl">"{gratitudeQuote?.quote}"</p>
-              <p className="text-md md:text-xl">
-                — Um ser determinado ({convertDate(gratitudeQuote?.date)})
-              </p>
+            <div className="flex justify-center w-full">
+              <div className="my-8 mb-8 mx-6 py-4 bg-white/70 w-full max-w-3xl shadow-2xl rounded-xl">
+                <p className="text-2xl md:text-3xl">
+                  "{gratitudeQuote?.quote}"
+                </p>
+                <p className="text-md md:text-xl">
+                  — Um ser determinado ({convertDate(gratitudeQuote?.date)})
+                </p>
+              </div>
             </div>
           )}
         </>
