@@ -93,17 +93,32 @@ export default function Profile() {
                 {formatTime(totalSpentTime[currentFeature])}
               </p>
             </div>
-
-            <button
-              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 duration-200 cursor-pointer"
-              onClick={() => {
-                clearTime(currentFeatureObj?.nick as FeatureKey);
-                setTotalSpentTime(getResume());
-                setCurrentFeature("");
-              }}
-            >
-              Deletar tempo
-            </button>
+            <div className="flex flex-col md:flex-row justify-between gap-2">
+              <button
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 duration-200 cursor-pointer"
+                onClick={() =>
+                  (window.location.href = "/" + currentFeatureObj?.nick)
+                }
+              >
+                Acessar aplicativo 🡵
+              </button>
+              <button
+                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 duration-200 cursor-pointer"
+                onClick={() => setCurrentFeature("")}
+              >
+                Voltar
+              </button>
+              <button
+                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 duration-200 cursor-pointer"
+                onClick={() => {
+                  clearTime(currentFeatureObj?.nick as FeatureKey);
+                  setTotalSpentTime(getResume());
+                  setCurrentFeature("");
+                }}
+              >
+                Deletar tempo
+              </button>
+            </div>
           </dialog>
           <Overlay onClick={() => setCurrentFeature("")} zIndex={100} />
         </div>
