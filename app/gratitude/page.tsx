@@ -96,7 +96,8 @@ export default function GratitudePage() {
           <input
             ref={inputRef}
             className="w-full h-full mx-auto block p-4 border-2 border-gray-300 rounded-lg resize-none focus:ring-2 focus:ring-blue-400 duration-300 text-sm md:text-2xl"
-            placeholder="Hoje sou grato(a) por..."
+            placeholder="Seu agradecimento..."
+            defaultValue={"Tenho gratidão por "}
           ></input>
           <button
             className="h-full aspect-square bg-blue-500 text-white rounded-2xl text-3xl font-bold hover:bg-blue-600 duration-300 cursor-pointer"
