@@ -78,41 +78,35 @@ export default function Profile() {
       })}
 
       {currentFeature && (
-        <>
-          {/* Extra info for mobile */}
-          <div className="md:hidden block">
-            <dialog
-              open
-              className="w-4/5 min-h-96 bg-white fixed left-1/2 top-1/2 -translate-1/2 p-6 rounded-xl z-110"
-            >
-              <h1 className="text-3xl">
-                Detalhes sobre {currentFeatureObj?.featureName}
-              </h1>
-              <p>{currentFeatureObj?.about}</p>
-              <button
-                className="bg-red-600 text-white px-4 py-2 rounded mt-4 hover:bg-red-700 duration-200 cursor-pointer"
-                onClick={() => {
-                  clearTime(currentFeatureObj?.nick as FeatureKey);
-                  setTotalSpentTime(getResume());
-                  setCurrentFeature("");
-                }}
-              >
-                Deletar tempo
-              </button>
-            </dialog>
-            <Overlay onClick={() => setCurrentFeature("")} zIndex={100} />
-          </div>
-
-          {/* Extra info for desktop */}
-          <div className="fixed w-1/2 h-2/3 bg-blue-200 top-1/2 right-4 -translate-y-1/2 p-8 text-center md:block hidden">
+        <div>
+          <dialog
+            open
+            className="w-4/5 max-w-md min-h-72 bg-white fixed left-1/2 top-1/2 -translate-1/2 p-6 rounded-xl z-110 flex flex-col justify-between gap-6"
+          >
             <h1 className="text-3xl">
               Detalhes sobre {currentFeatureObj?.featureName}
             </h1>
-            <div className="w-full h-96 bg-blue-50 p-4">
+            <div>
               <p>{currentFeatureObj?.about}</p>
+              <p>
+                Tempo gasto no aplicativo:{" "}
+                {formatTime(totalSpentTime[currentFeature])}
+              </p>
             </div>
-          </div>
-        </>
+
+            <button
+              className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 duration-200 cursor-pointer"
+              onClick={() => {
+                clearTime(currentFeatureObj?.nick as FeatureKey);
+                setTotalSpentTime(getResume());
+                setCurrentFeature("");
+              }}
+            >
+              Deletar tempo
+            </button>
+          </dialog>
+          <Overlay onClick={() => setCurrentFeature("")} zIndex={100} />
+        </div>
       )}
     </section>
   );
