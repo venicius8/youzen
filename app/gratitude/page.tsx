@@ -10,7 +10,7 @@ interface GratitudeEntry {
   date: string;
 }
 
-export default function GratitudePage() {
+export default function Gratitude() {
   const [entries, setEntries] = useState<GratitudeEntry[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentEntry, setCurrentEntry] = useState<GratitudeEntry | null>();
