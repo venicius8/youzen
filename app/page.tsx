@@ -47,8 +47,7 @@ export default function Main() {
     }
   }, []);
 
-  const convertDate = (date: string) =>
-    new Date(date.split("T")[0]).toLocaleDateString();
+  const convertDate = (date: string) => new Date(date).toLocaleDateString();
 
   const newUser = isClient && Object.keys(totalSpentTime).length === 0;
 
