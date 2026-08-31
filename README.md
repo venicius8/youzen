@@ -1,7 +1,7 @@
 # YouZen
 
-**Um app de bem-estar e meditação construído com Next.js**  
-Práticas guiadas de respiração, paisagens sonoras relaxantes, frases motivacionais, diário de gratidão e muito mais — tudo para ajudar você a encontrar paz no dia a dia.
+Um aplicativo de bem-estar e meditação criado com Next.js.
+Explore práticas guiadas de respiração, paisagens sonoras relaxantes, citações inspiradoras, um diário de gratidão e muito mais — tudo o que você precisa para encontrar equilíbrio e paz no seu dia a dia.
 
 ## 🚀 Demo
 
