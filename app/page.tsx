@@ -25,27 +25,34 @@ export default function Main() {
   }, []);
 
   useEffect(() => {
-    const stored = localStorage.getItem("gratitudeEntries");
-    if (stored) {
-      try {
-        const entries = JSON.parse(stored);
+    if (!isClient) return;
 
-        if (Array.isArray(entries) && entries.length > 0) {
-          const randomQuoteIndex = Math.floor(Math.random() * entries.length);
-          const randomQuote = entries[randomQuoteIndex];
+    try {
+      const stored = localStorage.getItem("gratitudeEntries");
+      if (!stored) {
+        setGratitudeQuote(null);
+        return;
+      }
 
-          setGratitudeQuote(randomQuote);
-        } else {
-          setGratitudeQuote(null);
-        }
-      } catch (error) {
-        console.error("Error: " + error);
+      const entries = JSON.parse(stored);
+      if (Array.isArray(entries) && entries.length > 0) {
+        const randomIndex = Math.floor(Math.random() * entries.length);
+        setGratitudeQuote(entries[randomIndex]);
+      } else {
         setGratitudeQuote(null);
       }
+    } catch (error) {
+      console.error("Error parsing gratitude entries:", error);
+      setGratitudeQuote(null);
     }
-  }, []);
+  }, [isClient]);
 
-  const convertDate = (date: string) => new Date(date).toLocaleDateString();
+  const convertDate = (date: string) =>
+    new Date(date).toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
 
   const newUser = isClient && Object.keys(totalSpentTime).length === 0;
 
@@ -54,51 +61,60 @@ export default function Main() {
       <GreetingHeader />
 
       {newUser ? (
-        <>
-          <h2 className="text-2xl m-4">
-            Parece que você é novo por aqui. Clique aqui abaixo e vamos iniciar
-            sua primeira atividade.
+        <section className="flex flex-col items-center justify-center gap-6 mt-8">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 max-w-md leading-relaxed">
+            Parece que você é novo por aqui. Clique abaixo e vamos iniciar sua
+            primeira atividade.
           </h2>
-
-          <Link href={"/explore"}>
+          <Link href="/explore" className="w-full max-w-xs sm:w-auto">
             <Button type="primary">Começar</Button>
           </Link>
-        </>
+        </section>
       ) : (
-        <>
-          <h2 className="text-2xl m-4">Suas atividades recentes</h2>
-          {isClient && Object.keys(totalSpentTime).length > 0 && (
-            <HorizontalScrollView>
-              {Object.entries(totalSpentTime).map(([nick], index) => {
-                const feature = allFeatures.find((el) => el.nick === nick);
+        <div className="space-y-8">
+          <section className="mt-6">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold text-gray-800 mb-4">
+              Suas atividades recentes
+            </h2>
 
-                return (
-                  <HorizontalElement
-                    key={index}
-                    img={feature!.imageURL}
-                    title={feature!.featureName}
-                    link={`/${feature!.nick}`}
-                  />
-                );
-              })}
-            </HorizontalScrollView>
-          )}
-          <Button type="primary" url="/explore">
-            Ir para página Explorar
-          </Button>
-          {gratitudeQuote && (
-            <div className="flex justify-center w-full">
-              <div className="my-8 mb-8 mx-6 py-4 bg-white/70 w-full max-w-3xl shadow-2xl rounded-xl">
-                <p className="text-2xl md:text-3xl">
-                  "{gratitudeQuote?.quote}"
-                </p>
-                <p className="text-md md:text-xl">
-                  — Um ser determinado ({convertDate(gratitudeQuote?.date)})
-                </p>
-              </div>
+            {isClient && Object.keys(totalSpentTime).length > 0 && (
+              <HorizontalScrollView>
+                {Object.entries(totalSpentTime).map(([nick]) => {
+                  const feature = allFeatures.find((el) => el.nick === nick);
+                  if (!feature) return null;
+
+                  return (
+                    <HorizontalElement
+                      key={nick}
+                      img={feature.imageURL}
+                      title={feature.featureName}
+                      link={`/${feature.nick}`}
+                    />
+                  );
+                })}
+              </HorizontalScrollView>
+            )}
+
+            <div className="mt-6 flex justify-center">
+              <Button type="primary" url="/explore">
+                Ir para página Explorar
+              </Button>
             </div>
+          </section>
+
+          {gratitudeQuote && (
+            <section className="mx-auto w-full max-w-3xl px-2">
+              <div className="bg-white/70 backdrop-blur-sm rounded-2xl shadow-lg p-6 sm:p-8">
+                <blockquote className="text-lg sm:text-xl md:text-2xl text-gray-700 italic leading-relaxed">
+                  "{gratitudeQuote.quote}"
+                </blockquote>
+                <cite className="block mt-4 text-sm sm:text-base text-gray-500 not-italic">
+                  — Um ser determinado ({convertDate(gratitudeQuote.date)})
+                </cite>
+              </div>
+            </section>
           )}
-        </>
+        </div>
       )}
     </main>
   );
