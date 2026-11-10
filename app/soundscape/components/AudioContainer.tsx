@@ -13,6 +13,7 @@ export default function AudioContainer({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [volume, setVolume] = useState(0.6);
 
+  // Initialize audio element with looping enabled
   useEffect(() => {
     audioRef.current = new Audio(src);
     audioRef.current.loop = true;
@@ -24,6 +25,7 @@ export default function AudioContainer({
     };
   }, [src]);
 
+  // Update volume when state changes
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = volume;

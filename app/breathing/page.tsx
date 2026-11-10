@@ -4,26 +4,36 @@ import { saveTime } from "@/utils/timeTracker";
 import { useState, useEffect, useRef } from "react";
 
 export default function Breathing() {
+  // Current scale of the breathing circle (0.5 = resting, 1.2 = fully expanded).
   const [scale, setScale] = useState(0.5);
+  // Text label indicating the current phase of the breathing cycle.
   const [phase, setPhase] = useState<
     "Inspire" | "Segure" | "Expire" | "Quando quiser..."
   >("Quando quiser...");
+  // Whether the breathing animation is actively running.
   const [isRunning, setIsRunning] = useState(false);
 
+  // Configurable durations (in ms) for each phase of the cycle.
   const [inhale, setInhale] = useState(3000);
   const [holdInhale, setHoldInhale] = useState(4000);
   const [exhale, setExhale] = useState(6000);
   const [holdExhale, setHoldExhale] = useState(2000);
 
+  // requestAnimationFrame ID for smooth scaling animation.
   const animationRef = useRef<number>(0);
+  // Timestamp when the current animation started.
   const startTimeRef = useRef<number>(0);
+  // Elapsed seconds counter for time tracking.
   const secondsRef = useRef(0);
+  // setInterval ID used to count seconds while the component is mounted.
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Easing function: produces smooth acceleration/deceleration over t ∈ [0, 1].
   const easeInOut = (t: number) => {
     return -(Math.cos(Math.PI * t) - 1) / 2;
   };
 
+  // Count seconds on mount; persist total time spent on unmount.
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       secondsRef.current += 1;
@@ -36,6 +46,7 @@ export default function Breathing() {
     };
   }, []);
 
+  // Main animation loop: drives the circle's scale and phase label based on elapsed time.
   useEffect(() => {
     if (!isRunning) {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
@@ -43,16 +54,19 @@ export default function Breathing() {
     }
 
     const animate = (timestamp: number) => {
+      // Record the start timestamp on the first frame.
       if (!startTimeRef.current) {
         startTimeRef.current = timestamp;
       }
 
+      // Calculate position within the repeating full cycle.
       const totalCycle = inhale + holdInhale + exhale + holdExhale;
       const cycleTime = (timestamp - startTimeRef.current) % totalCycle;
 
       let currentScale = 0.5;
       let currentPhase: typeof phase = "Inspire";
 
+      // Determine which phase we're in and compute the corresponding scale.
       if (cycleTime < inhale) {
         const progress = cycleTime / inhale;
         currentScale = 0.5 + 0.7 * easeInOut(progress);
@@ -82,6 +96,7 @@ export default function Breathing() {
     };
   }, [isRunning, inhale, holdInhale, exhale, holdExhale]);
 
+  // Resets the animation state back to its initial idle condition.
   const reset = () => {
     startTimeRef.current = 0;
     setScale(0.5);
@@ -90,6 +105,7 @@ export default function Breathing() {
 
   return (
     <section className="flex flex-col justify-between py-12 px-4 h-screen">
+      {/* Animated breathing circle centered vertically */}
       <div className="flex-1 flex items-center justify-center">
         <div
           className="bg-linear-to-br from-cyan-400 to-blue-600 rounded-full shadow-2xl transition-all duration-100"
@@ -102,6 +118,7 @@ export default function Breathing() {
         />
       </div>
 
+      {/* Phase instruction text with pulse effect during active use */}
       <p
         className={`text-4xl font-light text-cyan-700 text-center mb-10 ${
           isRunning && "animate-pulse"
@@ -110,8 +127,10 @@ export default function Breathing() {
         {isRunning ? phase : "Quando quiser..."}
       </p>
 
+      {/* Control panel: sliders for timing settings and play/pause/reset buttons */}
       <div className="bg-white/50 backdrop-blur-xl rounded-xl p-4 shadow-xl max-w-2xl mx-auto space-y-4">
         <div className="grid md:grid-cols-4 grid-cols-2 gap-4 text-sm">
+          {/* Duration sliders disabled while animation is running */}
           <div>
             <label className="block text-gray-600">Inspire</label>
             <input
@@ -178,6 +197,7 @@ export default function Breathing() {
           </div>
         </div>
 
+        {/* Start/Pause toggle and Reset button */}
         <div className="flex gap-3 justify-center duration-300">
           <button
             onClick={() => setIsRunning(!isRunning)}

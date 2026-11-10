@@ -1,28 +1,35 @@
 import { ReactNode } from "react";
 
+// Wrapper for page titles with responsive sizing and centered layout.
 const Title = ({ children }: { children: ReactNode }) => (
   <h1 className="text-4xl md:text-5xl text-center my-20 font-bold">
     {children}
   </h1>
 );
 
+// Wrapper for section subtitles with responsive sizing.
 const Subtitle = ({ children }: { children: ReactNode }) => (
   <h2 className="text-2xl md:text-3xl mt-10 mb-4">{children}</h2>
 );
 
+// Wrapper for body paragraphs with gray text color.
 const Paragraph = ({ children }: { children: ReactNode }) => (
   <p className="text-lg md:text-xl mb-4 text-gray-800">{children}</p>
 );
 
+// Wrapper for highlighted text with a blue background and underlining.
 const HL = ({ children }: { children: ReactNode }) => (
   <u className="underline-offset-4 bg-blue-300/40">{children}</u>
 );
 
+// About page content describing YouZen's purpose, audience, and origin story.
 export default function About() {
   return (
     <section className="m-6">
+      {/* Main page title */}
       <Title>Sobre YouZen</Title>
 
+      {/* Section explaining the app's core value proposition */}
       <Subtitle>O que é YouZen?</Subtitle>
 
       <Paragraph>
@@ -35,6 +42,7 @@ export default function About() {
         mensagens positivas e motivadoras
       </Paragraph>
 
+      {/* Section defining the target audience */}
       <Subtitle>Para quem é o YouZen é indicado?</Subtitle>
 
       <Paragraph>
@@ -45,9 +53,10 @@ export default function About() {
       <Paragraph>
         OBSERVAÇÃO: pessoas com quadro elevado de ansiedade, depressão ou pânico
         ainda podem utilizar este aplicativo, mas recomendo fortemente buscar
-        ajuda profisional. Afinal de contas, sua saúde é em primeiro lugar.
+        ajuda profissional. Afinal de contas, sua saúde é em primeiro lugar.
       </Paragraph>
 
+      {/* Section sharing the personal motivation behind the app */}
       <Subtitle>Por que esse app foi criado?</Subtitle>
 
       <Paragraph>

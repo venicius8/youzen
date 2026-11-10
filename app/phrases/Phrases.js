@@ -1,3 +1,5 @@
+// All the phrases to be used in the Phrases feature.
+
 const Phrases = [
   "O primeiro passo não precisa ser perfeito, só precisa ser dado.",
   "Quem planta coragem colhe conquistas.",

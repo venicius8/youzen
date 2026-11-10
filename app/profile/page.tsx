@@ -7,19 +7,25 @@ import Overlay from "../components/UI/Overlay";
 import Button from "../components/UI/Button";
 
 export default function Profile() {
+  // Stores total time spent per feature, keyed by the feature's nick (slug).
   const [totalSpentTime, setTotalSpentTime] = useState<Record<string, number>>(
-    {}
+    {},
   );
+  // Holds the nick of the feature currently opened in the details dialog.
   const [currentFeature, setCurrentFeature] = useState("");
 
+  // Resolve metadata (name, image, description) for the selected feature.
   const currentFeatureObj = allFeatures.find(
-    (el) => el.nick === currentFeature
+    (el) => el.nick === currentFeature,
   );
 
+  // Load the saved time-tracking resume once on mount.
   useEffect(() => {
     setTotalSpentTime(getResume());
   }, []);
 
+  // Converts a total number of seconds into a compact "Xh, Ymin, Zs" string,
+  // omitting any unit that is zero.
   const formatTime = (totalSeconds: number) => {
     const hours = Math.floor(totalSeconds / 3600);
     const minutes = Math.floor((totalSeconds % 3600) / 60);
@@ -36,6 +42,7 @@ export default function Profile() {
 
   return (
     <section className="flex flex-col mt-20 mx-4">
+      {/* Empty state shown when no activity has been recorded yet. */}
       {Object.entries(totalSpentTime).length === 0 ? (
         <div className="flex flex-col text-center">
           <h1 className="text-4xl my-4 font-bold">Perfil vazio...</h1>
@@ -53,6 +60,7 @@ export default function Profile() {
         </h1>
       )}
 
+      {/* One card per tracked feature; clicking it opens the details dialog. */}
       {Object.entries(totalSpentTime).map(([nick, number]) => {
         const feature = allFeatures.find((el) => el.nick === nick);
 
@@ -77,6 +85,7 @@ export default function Profile() {
         );
       })}
 
+      {/* Details modal for the selected feature, with access/back/delete actions. */}
       {currentFeature && (
         <div>
           <dialog
@@ -108,6 +117,7 @@ export default function Profile() {
               >
                 Voltar
               </button>
+              {/* Clears the stored time for this feature and refreshes the list. */}
               <button
                 className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 duration-200 cursor-pointer"
                 onClick={() => {
@@ -120,6 +130,7 @@ export default function Profile() {
               </button>
             </div>
           </dialog>
+          {/* Backdrop overlay: clicking outside the dialog closes it. */}
           <Overlay onClick={() => setCurrentFeature("")} zIndex={100} />
         </div>
       )}

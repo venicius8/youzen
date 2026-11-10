@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Overlay from "../components/UI/Overlay";
 import { saveTime } from "@/utils/timeTracker";
 
+// Represents a single user-submitted gratitude entry.
 interface GratitudeEntry {
   id: string;
   quote: string;
@@ -11,14 +12,20 @@ interface GratitudeEntry {
 }
 
 export default function Gratitude() {
+  // List of all saved gratitude entries.
   const [entries, setEntries] = useState<GratitudeEntry[]>([]);
+  // Ref to the input field for clearing its value after submission.
   const inputRef = useRef<HTMLInputElement>(null);
+  // The entry currently being viewed in the details dialog.
   const [currentEntry, setCurrentEntry] = useState<GratitudeEntry | null>();
+  // Controls visibility of the details dialog.
   const [isEntryInfoVisible, setIsEntryInfoVisible] = useState(false);
+  // Tracks elapsed seconds for time persistence.
   const secondsRef = useRef(0);
+  // Holds the setInterval ID for cleanup.
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Get saved entries
+  // Load saved entries from localStorage on mount.
   useEffect(() => {
     const savedEntries = localStorage.getItem("gratitudeEntries");
     if (savedEntries) {
@@ -31,12 +38,12 @@ export default function Gratitude() {
     }
   }, []);
 
-  // Save entries
+  // Persist entries to localStorage whenever the list changes.
   useEffect(() => {
     localStorage.setItem("gratitudeEntries", JSON.stringify(entries));
   }, [entries]);
 
-  // Add new entry
+  // Creates a new entry with the current input value and appends it to the list.
   const addEntry = () => {
     const value = inputRef.current?.value.trim();
     if (!value) return;
@@ -51,28 +58,28 @@ export default function Gratitude() {
     setEntries([...entries, newEntry]);
   };
 
-  // Delete entry
+  // Removes an entry by ID and closes the info dialog if it was open.
   const deleteEntry = (idToDelete: string) => {
     setEntries(entries.filter((entry) => entry.id !== idToDelete));
     setIsEntryInfoVisible(false);
   };
 
-  // Sort entries (most recent first)
+  // Sorts entries by date (newest first) for display.
   const sortedEntries = [...entries].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
   );
 
-  // handle entryInfo
+  // Opens the details dialog for a specific entry.
   const handleEntryInfo = (entry: GratitudeEntry) => {
     setCurrentEntry(entry);
     setIsEntryInfoVisible(true);
   };
 
-  // Convert ISOString to local date/time
+  // Formats an ISO string into local date and time representations.
   const convertDate = (date: string) => new Date(date).toLocaleDateString();
   const convertTime = (date: string) => new Date(date).toLocaleTimeString();
 
-  // Time tracker
+  // Start a 1-second interval to track time; persist total seconds on unmount.
   useEffect(() => {
     intervalRef.current = setInterval(() => {
       secondsRef.current += 1;
@@ -87,6 +94,7 @@ export default function Gratitude() {
 
   return (
     <section className="my-20 flex flex-col items-center">
+      {/* Header section with input field and add button. */}
       <div className="w-4/5 h-76 bg-linear-to-br from-white to-gray-200 border-2 border-gray-400 rounded-2xl flex flex-col justify-center">
         <h1 className="text-4xl font-bold text-center">Gratitude</h1>
         <p className="text-center text-xl mt-4 px-4">
@@ -107,6 +115,8 @@ export default function Gratitude() {
           </button>
         </div>
       </div>
+
+      {/* List of saved entries, sorted by recency. */}
       <div className="w-4/5 min-h-96 mt-10 bg-linear-to-br from-white to-gray-200 border-2 border-gray-400 rounded-2xl">
         {entries.length === 0 ? (
           <p className="text-center text-xl mt-20 px-4">
@@ -126,6 +136,7 @@ export default function Gratitude() {
                 <p className="border border-gray-400 min-h-12 w-fit min-w-0 text-xl flex items-center bg-white rounded-xl px-4 overflow-hidden">
                   {entry.quote}
                 </p>
+                {/* Info button to view/delete the entry. */}
                 <button
                   className="h-10 aspect-square bg-blue-500 hover:bg-blue-600 cursor-pointer duration-300 rounded-sm text-3xl font-bold text-white"
                   onClick={() => handleEntryInfo(entry)}
@@ -137,6 +148,8 @@ export default function Gratitude() {
           </div>
         )}
       </div>
+
+      {/* Details dialog for viewing or deleting a specific entry. */}
       {isEntryInfoVisible && (
         <>
           <dialog
@@ -168,6 +181,7 @@ export default function Gratitude() {
               </button>
             </div>
           </dialog>
+          {/* Backdrop overlay to close the dialog. */}
           <Overlay
             onClick={() => {
               setIsEntryInfoVisible(false);
