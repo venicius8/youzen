@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Overlay from "../components/UI/Overlay";
-import { saveTime } from "@/utils/timeTracker";
+import useTimeTracker from "../hooks/useTimeTracker";
 
 // Represents a single user-submitted gratitude entry.
 interface GratitudeEntry {
@@ -20,10 +20,8 @@ export default function Gratitude() {
   const [currentEntry, setCurrentEntry] = useState<GratitudeEntry | null>();
   // Controls visibility of the details dialog.
   const [isEntryInfoVisible, setIsEntryInfoVisible] = useState(false);
-  // Tracks elapsed seconds for time persistence.
-  const secondsRef = useRef(0);
-  // Holds the setInterval ID for cleanup.
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  // Custom hook to track time spent on this page.
+  useTimeTracker("gratitude");
 
   // Load saved entries from localStorage on mount.
   useEffect(() => {
@@ -78,19 +76,6 @@ export default function Gratitude() {
   // Formats an ISO string into local date and time representations.
   const convertDate = (date: string) => new Date(date).toLocaleDateString();
   const convertTime = (date: string) => new Date(date).toLocaleTimeString();
-
-  // Start a 1-second interval to track time; persist total seconds on unmount.
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      secondsRef.current += 1;
-    }, 1000);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-
-      saveTime("gratitude", secondsRef.current);
-    };
-  }, []);
 
   return (
     <section className="my-20 flex flex-col items-center">

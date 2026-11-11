@@ -1,36 +1,22 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import Phrases from "./Phrases";
-import { saveTime } from "@/utils/timeTracker";
+import useTimeTracker from "../hooks/useTimeTracker";
 
 export default function Phrase() {
   // The phrase currently displayed to the user.
   const [currentPhrase, setCurrentPhrase] = useState("");
   // Full list of available phrases loaded from the Phrases data module.
   const [allPhrases, setAllPhrases] = useState<string[]>([]);
-  // Interval ID used to track elapsed time on the page.
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  // Elapsed seconds counter kept in a ref to avoid re-renders every tick.
-  const secondsRef = useRef(0);
   // Whether the fade-out animation is running (blocks rapid clicks).
   const [isAnimating, setIsAnimating] = useState(false);
+  // Custom hook to track time spent on this page.
+  useTimeTracker("phrases");
 
   // Load the static phrase list once on mount.
   useEffect(() => {
     setAllPhrases(Phrases);
-  }, []);
-
-  // Count seconds while the component is mounted; persist total time on unmount.
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      secondsRef.current += 1;
-    }, 1000);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      saveTime("phrases", secondsRef.current);
-    };
   }, []);
 
   // Pick and display a random phrase from the list.

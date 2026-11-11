@@ -1,33 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import AudioContainer from "./components/AudioContainer";
 import AudioSection from "./components/AudioSection";
-import { getTime, saveTime } from "@/utils/timeTracker";
+import useTimeTracker from "../hooks/useTimeTracker";
 
 export default function Soundscape() {
-  // Tracks the elapsed time in seconds using a ref so it persists across renders
-  // without causing unnecessary re-renders or stale closure issues.
-  const secondsRef = useRef(0);
-  // Holds the setInterval ID so it can be cleared on cleanup.
-  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+  // Custom hook to track time spent on this page.
+  useTimeTracker("soundscape");
 
   // Base URL for audio assets, injected at build time via Next.js env vars.
   const audios = process.env.NEXT_PUBLIC_AUDIOS_URL;
-
-  // Start a 1-second interval on mount to track elapsed time.
-  // On unmount, stop the interval and persist the total seconds to localStorage.
-  useEffect(() => {
-    intervalRef.current = setInterval(() => {
-      secondsRef.current += 1;
-    }, 1000);
-
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-
-      saveTime("soundscape", secondsRef.current);
-    };
-  }, []);
 
   return (
     <section className="h-screen flex flex-col md:flex-row">
